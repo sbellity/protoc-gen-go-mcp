@@ -27,15 +27,21 @@ func main() {
 		"mcp",
 		"Generate files into a sub-package of the package containing the base .pb.go files using the given suffix. An empty suffix denotes to generate into the same package as the base pb.go files.",
 	)
+	toolNameStyle := flagSet.String(
+		"tool_name_style",
+		"full",
+		"Style for MCP tool names: 'full' (default) generates 'package_Service_Method', 'method' generates just 'Method' (relies on MCP server name for namespacing).",
+	)
 
 	protogen.Options{
 		ParamFunc: flagSet.Set,
 	}.Run(func(gen *protogen.Plugin) error {
+		style := generator.ToolNameStyle(*toolNameStyle)
 		for _, f := range gen.Files {
 			if !f.Generate {
 				continue
 			}
-			generator.NewFileGenerator(f, gen).Generate(*packageSuffix)
+			generator.NewFileGenerator(f, gen, style).Generate(*packageSuffix)
 		}
 		return nil
 	})

@@ -30,7 +30,7 @@ func main() {
 	toolNameStyle := flagSet.String(
 		"tool_name_style",
 		"full",
-		"Style for MCP tool names: 'full' (default) generates 'package_Service_Method', 'method' generates just 'Method' (relies on MCP server name for namespacing).",
+		"Style for MCP tool names: 'full' (default) generates 'package_Service_Method', 'method' generates 'Method' (PascalCase), 'snake' generates 'add_memory' (snake_case, recommended MCP convention).",
 	)
 
 	protogen.Options{
